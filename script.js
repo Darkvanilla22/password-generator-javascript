@@ -8,6 +8,20 @@ var numbers = "0123456789";
 var characters = "!@#$%^&*()_-+=";
 
 // Write password to the #password input
+function generatePassword() {
+  var length = +prompt("Enter password length (8-128):");
+  if (length < 8 || length > 128) return alert("Enter a valid length (8-128).");
+
+  var sets = [lowerCase, upperCase, numbers, characters];
+  var selectedSets = sets.filter(set => confirm(`Include ${set === characters ? "special " : ""}${set} characters?`));
+
+  if (selectedSets.length === 0) return alert("Select at least one character set.");
+
+  var allChars = selectedSets.join("");
+  var password = Array.from({ length }, () => allChars[Math.floor(Math.random() * allChars.length)]).join("");
+  return password;
+}
+
 function writePassword() {
   var password = generatePassword();
   document.querySelector("#password").value = password;
